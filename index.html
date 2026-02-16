@@ -7,13 +7,13 @@
     <style>
         body { background-color: #000; color: #0f0; font-family: monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; display: flex; justify-content: center; align-items: center; z-index: 1000; cursor: pointer; }
-        .start-btn { padding: 20px 40px; font-size: 24px; color: white; background: #007bff; border: none; border-radius: 5px; cursor: pointer; }
+        .start-btn { padding: 20px 40px; font-size: 24px; color: white; background: #007bff; border: none; border-radius: 5px; cursor: pointer; pointer-events: none; }
         #loader-screen { display: none; text-align: center; width: 80%; }
         .progress-container { width: 100%; height: 20px; background: #333; border: 1px solid #0f0; margin-top: 20px; position: relative; }
         #progress-bar { height: 100%; width: 0%; background: #0f0; transition: width 0.1s; }
-        #main-content { display: none; text-align: center; background: #900; color: white; padding: 40px; border: 5px solid red; width: 90%; max-width: 600px; z-index: 2000; position: relative; }
-        .danger-btn { background: black; color: white; border: 2px solid white; padding: 15px; cursor: pointer; margin-top: 20px; font-weight: bold; width: 100%; }
-        #sub-log { font-size: 12px; margin-top: 10px; color: #888; }
+        #main-content { display: none; text-align: center; background: #900; color: white; padding: 40px; border: 5px solid red; width: 90%; max-width: 600px; z-index: 2000; position: relative; box-sizing: border-box; }
+        .danger-btn { background: black; color: white; border: 2px solid white; padding: 15px; cursor: pointer; margin-top: 20px; font-weight: bold; width: 100%; text-transform: uppercase; }
+        #sub-log { font-size: 12px; margin-top: 10px; color: #888; height: 20px; }
     </style>
 </head>
 <body>
@@ -34,12 +34,12 @@
     <div id="main-content">
         <h1 style="font-size: 40px; margin-bottom: 10px;">Ooops!</h1>
         <h2 style="margin-bottom: 20px;">Your important files are encrypted!</h2>
-        <p>Many of your documents, photos, videos, databases and other files are no longer accessible because they have been encrypted. Maybe you are busy looking for a way to recover your files, but do not waste your time.</p>
+        <p>Many of your documents, photos, videos, databases and other files are no longer accessible because they have been encrypted. Do not waste your time looking for a way to recover them.</p>
         <p style="color: yellow; font-weight: bold;">To decrypt your files, you need to pay: 0.05 BTC</p>
         <button class="danger-btn" onclick="scareMore()">ДЕАКТИВИРОВАТЬ RAT</button>
     </div>
 
-    <audio id="siren" loop src="https://www.soundjay.com/buttons/beep-01a.mp3"></audio>
+    <audio id="siren" loop src="https://www.myinstants.com/media/sounds/nuclear_alarm.mp3"></audio>
 
     <script>
         let prg = 0;
@@ -58,13 +58,14 @@
             if (isStarted) return;
             isStarted = true;
 
-            // Звук
+            // Запуск звука
             const siren = document.getElementById('siren');
             if (siren) {
-                siren.play().catch(e => console.log("Sound blocked by browser"));
+                siren.volume = 1.0;
+                siren.play().catch(e => console.log("Sound blocked: ", e));
             }
 
-            // Переключаем экраны
+            // Переключение экранов
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('loader-screen').style.display = 'block';
             
@@ -86,10 +87,12 @@
                 prg++;
                 if (bar) bar.style.width = prg + '%';
                 if (perc) perc.innerText = prg + '% COMPLETED';
-                if (sublog && prg % 10 === 0) {
-                    sublog.innerText = consoleLogs[Math.floor(Math.random() * consoleLogs.logs)];
+                
+                // Меняем текст логов каждые 15%
+                if (sublog && prg % 15 === 0) {
+                    sublog.innerText = consoleLogs[Math.floor(Math.random() * consoleLogs.length)];
                 }
-            }, 80); // Скорость загрузки
+            }, 60); // Скорость загрузки (можно менять)
         }
 
         function scareMore() {
