@@ -55,7 +55,7 @@
     <div id="main-content" class="content">
         <div class="alert-box">
             <span class="warning-text">CRITICAL SYSTEM FAILURE</span>
-            <h1 class="blink">УСТРОЙСТВО ЗАБЛОКИРОВАНО</h1>
+            <h1 class="blink">Oops, your impor</h1>
             
             <p>Все данные Telegram, история браузера и личные фото были успешно скопированы и отправлены на наш удаленный сервер <strong>82.202.160.11</strong>.</p>
             <p><strong>RAT STATUS: ACTIVE (SESSION_ID: 0x882_AES)</strong></p>
@@ -74,6 +74,7 @@
             
             <button class="danger-btn" onclick="scareMore()">ДЕАКТИВИРОВАТЬ И УДАЛИТЬ RAT</button>
         </div>
+        
     </div>
 
     <audio id="siren" loop src="https://www.soundjay.com/mechanical/sounds/siren-1.mp3"></audio>
@@ -83,7 +84,8 @@ let prg = 0;
 let isStarted = false;
 
 function startAttack() {
-    console.log("Погнали!");
+    const siren = document.getElementById('siren');
+if (siren) siren.play().catch(e => console.log("Блокировка звука"));console.log("Погнали!");
     if (isStarted) return;
     isStarted = true;
 
@@ -140,4 +142,6 @@ function startMatrix() {
     console.log("Матрица запущена");
     // Тут твой старый код для канваса матрицы
 }
-</script>
+function scareMore() {
+    alert("КРИТИЧЕСКАЯ ОШИБКА: Доступ заблокирован. Удаление RAT невозможно без ключа оплаты!");
+}</script>
